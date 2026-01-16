@@ -10,6 +10,9 @@
   --panel: #0f1512;
   --panel-border: #2a3a33;
   --glow: #38f3c8;
+  --frame-dark: #0b120f;
+  --frame-mid: #22352e;
+  --frame-light: #3a5f50;
 }
 
 @theme inline {
@@ -57,21 +60,52 @@ body {
   mix-blend-mode: soft-light;
 }
 
+.pixel-frame,
+.ascii-panel,
+.glow-card,
+.cta-terminal {
+  border: 3px solid var(--frame-dark);
+  box-shadow:
+    0 0 0 2px var(--frame-mid),
+    0 0 0 4px var(--frame-light),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55);
+}
+
 .ascii-panel {
-  background: linear-gradient(135deg, rgba(10, 14, 11, 0.7), rgba(13, 22, 18, 0.95));
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 0 30px rgba(56, 243, 200, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.12)),
+    linear-gradient(135deg, rgba(10, 14, 11, 0.7), rgba(13, 22, 18, 0.95));
+  box-shadow:
+    0 0 0 2px var(--frame-mid),
+    0 0 0 4px var(--frame-light),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(56, 243, 200, 0.08);
 }
 
 .glow-card {
-  background: rgba(10, 14, 11, 0.7);
-  border: 1px solid var(--panel-border);
-  box-shadow: 0 20px 45px rgba(4, 8, 6, 0.6), 0 0 18px rgba(56, 243, 200, 0.15);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.14)),
+    rgba(10, 14, 11, 0.7);
+  box-shadow:
+    0 0 0 2px var(--frame-mid),
+    0 0 0 4px var(--frame-light),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55),
+    0 20px 45px rgba(4, 8, 6, 0.6),
+    0 0 18px rgba(56, 243, 200, 0.15);
 }
 
 .cta-terminal {
-  border: 1px dashed rgba(139, 215, 186, 0.5);
-  background: rgba(8, 12, 10, 0.85);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.2)),
+    rgba(8, 12, 10, 0.85);
+  box-shadow:
+    0 0 0 2px var(--frame-mid),
+    0 0 0 4px var(--frame-light),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55);
 }
 
 .fade-up {

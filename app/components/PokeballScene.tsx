@@ -10,7 +10,7 @@ function Pokeball() {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.6;
+      groupRef.current.rotation.y = t * 1.05;
       groupRef.current.rotation.x = Math.sin(t * 0.4) * 0.15;
       groupRef.current.position.y = Math.sin(t * 0.9) * 0.08;
     }

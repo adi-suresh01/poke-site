@@ -84,7 +84,7 @@ export default function TerminalSim({ theme, lines }: TerminalSimProps) {
     .join("\n");
 
   return (
-    <div className="flex h-64 flex-col overflow-hidden border border-emerald-300/25 bg-black/70 sm:h-72 lg:h-80">
+    <div className="pixel-frame flex h-64 flex-col overflow-hidden bg-black/70 sm:h-72 lg:h-80">
       <TerminalHeader theme={theme} />
       <pre className="flex-1 whitespace-pre-wrap px-4 py-4 text-xs leading-6 text-emerald-100 sm:text-sm">
         {rendered}
