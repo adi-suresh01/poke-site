@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0a0e0b;
+  --bg-soft: #111814;
+  --ink: #d7ffef;
+  --ink-dim: #8bd7ba;
+  --accent: #ff3b30;
+  --accent-soft: #ffb454;
+  --panel: #0f1512;
+  --panel-border: #2a3a33;
+  --glow: #38f3c8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56, 243, 200, 0.15), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(255, 180, 84, 0.16), transparent 42%),
+    radial-gradient(circle at 70% 80%, rgba(255, 59, 48, 0.12), transparent 50%),
+    linear-gradient(180deg, #070a08 0%, #0b120f 55%, #060907 100%);
+  color: var(--ink);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(10, 14, 11, 0) 0px,
+    rgba(10, 14, 11, 0) 2px,
+    rgba(6, 8, 7, 0.5) 3px
+  );
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+}
+
+.ascii-panel {
+  background: linear-gradient(135deg, rgba(10, 14, 11, 0.7), rgba(13, 22, 18, 0.95));
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 0 30px rgba(56, 243, 200, 0.08);
+}
+
+.glow-card {
+  background: rgba(10, 14, 11, 0.7);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 20px 45px rgba(4, 8, 6, 0.6), 0 0 18px rgba(56, 243, 200, 0.15);
+}
+
+.cta-terminal {
+  border: 1px dashed rgba(139, 215, 186, 0.5);
+  background: rgba(8, 12, 10, 0.85);
+}
+
+.fade-up {
+  animation: fade-up 1s ease-out both;
+}
+
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
