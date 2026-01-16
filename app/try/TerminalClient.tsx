@@ -11,6 +11,7 @@ export default function TerminalClient() {
   const outerRef = useRef<HTMLDivElement | null>(null);
   const terminalRef = useRef<Terminal | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
+  const localEchoRef = useRef(true);
   const [status, setStatus] = useState<ConnectionStatus>("connecting");
   const [scale, setScale] = useState(1);
 
@@ -21,8 +22,8 @@ export default function TerminalClient() {
   }, []);
 
   const cols = 140;
-  const rows = 40;
-  const linePx = 19;
+  const rows = 46;
+  const linePx = 17;
 
   useEffect(() => {
     let onDataDispose: { dispose: () => void } | null = null;
@@ -86,6 +87,17 @@ export default function TerminalClient() {
       socket.addEventListener("message", (event) => {
         const data = event.data;
         if (typeof data === "string") {
+          if (data.startsWith("{")) {
+            try {
+              const payload = JSON.parse(data);
+              if (payload?.type === "echo") {
+                localEchoRef.current = Boolean(payload.value);
+                return;
+              }
+            } catch {
+              // fall through to terminal output
+            }
+          }
           terminal.write(data);
         } else {
           terminal.write(new Uint8Array(data));
@@ -104,8 +116,21 @@ export default function TerminalClient() {
 
       onDataDispose = terminal.onData((input: string) => {
         if (socket && socket.readyState === WebSocket.OPEN) {
-          socket.send(input);
+          const payload = input === "\r" ? "\r" : input;
+          socket.send(payload);
         }
+        if (!localEchoRef.current) {
+          return;
+        }
+        if (input === "\r") {
+          terminal.write("\r\n");
+          return;
+        }
+        if (input === "\u007F") {
+          terminal.write("\b \b");
+          return;
+        }
+        terminal.write(input);
       });
 
       sendResize();
@@ -141,8 +166,8 @@ export default function TerminalClient() {
         return;
       }
       const widthScale = outerWidth / innerWidth;
-      const heightScale = outerHeight ? outerHeight / innerHeight : 1;
-      setScale(Math.min(1, widthScale, heightScale));
+      const widthOnly = Math.min(1, widthScale);
+      setScale(widthOnly * 0.88);
     };
 
     const observer = new ResizeObserver(measure);
@@ -156,7 +181,7 @@ export default function TerminalClient() {
   }, []);
 
   return (
-    <div className="flex h-full min-h-[48vh] flex-col border border-emerald-300/25 bg-black/70">
+    <div className="flex h-full min-h-[42vh] flex-col border border-emerald-300/25 bg-black/70">
       <div className="flex items-center justify-between border-b border-emerald-300/20 px-4 py-2 text-[0.6rem] uppercase tracking-[0.3em] text-emerald-200/70">
         <span>Live Terminal</span>
         <span>{status}</span>
@@ -175,6 +200,8 @@ export default function TerminalClient() {
             ref={containerRef}
             className="h-full w-full"
             onClick={() => terminalRef.current?.focus()}
+            onPointerDown={() => terminalRef.current?.focus()}
+            onTouchStart={() => terminalRef.current?.focus()}
             onKeyDown={() => terminalRef.current?.focus()}
             tabIndex={0}
           />

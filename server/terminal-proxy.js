@@ -18,6 +18,7 @@ const ECHO = 1;
 const SUPPRESS_GO_AHEAD = 3;
 const TTYPE_SEND = 1;
 const TTYPE_IS = 0;
+const DEBUG = process.env.TERMINAL_DEBUG === "1";
 
 const wss = new WebSocketServer({ port: PORT });
 
@@ -41,7 +42,20 @@ wss.on("connection", (ws) => {
   const socket = net.connect(TELNET_PORT, TELNET_HOST);
   let pending = Buffer.alloc(0);
   let nawsEnabled = false;
-  let size = { cols: 140, rows: 40 };
+  let size = { cols: 140, rows: 46 };
+  let clientEcho = false;
+  const log = (...args) => {
+    if (DEBUG) {
+      console.log(...args);
+    }
+  };
+  const formatData = (data) => {
+    const buf = Buffer.isBuffer(data) ? data : Buffer.from(data);
+    return buf
+      .toString("utf8")
+      .replace(/\r/g, "\\r")
+      .replace(/\n/g, "\\n");
+  };
 
   const sendTelnet = (...bytes) => {
     socket.write(Buffer.from(bytes));
@@ -61,6 +75,12 @@ wss.on("connection", (ws) => {
           nawsEnabled = true;
           sendNaws();
         }
+        if (opt === ECHO) {
+          clientEcho = true;
+          if (ws.readyState === ws.OPEN) {
+            ws.send(JSON.stringify({ type: "echo", value: true }));
+          }
+        }
       } else {
         sendTelnet(IAC, WONT, opt);
       }
@@ -70,6 +90,12 @@ wss.on("connection", (ws) => {
     if (cmd === WILL) {
       if (opt === ECHO || opt === SUPPRESS_GO_AHEAD) {
         sendTelnet(IAC, DO, opt);
+        if (opt === ECHO) {
+          clientEcho = false;
+          if (ws.readyState === ws.OPEN) {
+            ws.send(JSON.stringify({ type: "echo", value: false }));
+          }
+        }
       } else {
         sendTelnet(IAC, DONT, opt);
       }
@@ -183,8 +209,14 @@ wss.on("connection", (ws) => {
           // fall through to raw write
         }
       }
+      if (typeof data === "string") {
+        log("[ws->telnet]", formatData(text));
+        socket.write(text);
+        return;
+      }
     }
 
+    log("[ws->telnet]", formatData(data));
     socket.write(data);
   });
 
