@@ -10,7 +10,7 @@ export default function Home() {
             Poke-Stream
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <span>ASCII Pokemon over Telnet</span>
+            <span>Pokemon live in your terminal</span>
             <a
               className="border border-emerald-300/40 px-3 py-1 text-emerald-100 transition hover:border-emerald-300 hover:text-white"
               href="#connect"
@@ -21,16 +21,17 @@ export default function Home() {
         </header>
 
         <main className="flex flex-1 flex-col gap-16 py-10 sm:py-14">
-          <section className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <section className="grid gap-10 lg:grid-cols-[1fr_1fr]">
             <div className="flex flex-col gap-6">
               <div className="space-y-4">
                 <p className="font-display text-3xl uppercase tracking-[0.08em] text-emerald-100 sm:text-4xl">
                   Catch Pokemon in pure ASCII, live over Telnet.
                 </p>
                 <p className="max-w-xl text-sm leading-6 text-emerald-200/80 sm:text-base">
-                  Poke-Stream is a terminal-native Pokemon capture game. A
-                  ray-cast 3D Pokeball spins beside 2D ASCII sprites while you
-                  connect, catch, and complete a persistent Gen 1 Pokedex.
+                  Watch ASCII characters come to life as Pokemon. Create a unique trainer name, catch every
+                  Gen 1 favorite over Telnet, and
+                  check back each day to unlock a random Pokemon. Can you catch
+                  &apos;em all?
                 </p>
               </div>
               <div
@@ -60,6 +61,18 @@ export default function Home() {
                 <span>Gen 1 Pokedex</span>
                 <span>Rust + Tokio</span>
               </div>
+            </div>
+            <div className="glow-card aspect-[2084/1374] overflow-hidden border border-emerald-300/25 bg-black/70">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              >
+                <source src="/pokestream-demo.mp4" type="video/mp4" />
+              </video>
             </div>
           </section>
 
