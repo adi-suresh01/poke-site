@@ -1,4 +1,6 @@
 import PokeballScene from "./components/PokeballScene";
+import SetupTabs from "./components/SetupTabs";
+import CopyCode from "./components/CopyCode";
 
 export default function Home() {
   return (
@@ -36,30 +38,19 @@ export default function Home() {
               </div>
               <div
                 id="connect"
-                className="cta-terminal flex flex-col gap-3 px-4 py-4 text-xs text-emerald-100 sm:text-sm"
+                className="cta-terminal flex flex-col gap-3 px-5 py-5 text-xs text-emerald-100 sm:text-sm"
               >
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="text-emerald-200/70">Play now:</span>
-                  <code className="text-emerald-100">
-                    telnet why-ntsc.gl.at.ply.gg 62201
-                  </code>
+                <div className="text-[0.65rem] uppercase tracking-[0.35em] text-emerald-200/70">
+                  Play Now
                 </div>
-                <div className="text-emerald-200/70">
-                  Optional color mode:{" "}
-                  <code className="text-emerald-100">
-                    POKESTREAM_COLOR=truecolor
-                  </code>
-                </div>
+                <CopyCode
+                  text="telnet why-ntsc.gl.at.ply.gg 62201"
+                  className="text-base sm:text-lg"
+                />
                 <div className="text-emerald-200/70">
                   Recommended terminal size:{" "}
                   <code className="text-emerald-100">140x40</code>
                 </div>
-              </div>
-              <div className="flex flex-wrap gap-3 text-[0.7rem] uppercase tracking-[0.25em] text-emerald-200/70">
-                <span>Playable over Telnet</span>
-                <span>3D Pokeball in ASCII</span>
-                <span>Gen 1 Pokedex</span>
-                <span>Rust + Tokio</span>
               </div>
             </div>
             <div className="glow-card aspect-[2084/1374] overflow-hidden border border-emerald-300/25 bg-black/70">
@@ -76,36 +67,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-            <div className="glow-card flex flex-col gap-4 px-6 py-6">
-              <h2 className="font-display text-lg uppercase tracking-[0.25em] text-emerald-100">
-                How It Works
-              </h2>
-              <ol className="space-y-3 text-sm text-emerald-200/80">
-                <li>1. Connect via Telnet and enter a trainer name.</li>
-                <li>2. A Pokemon appears in ASCII on the right.</li>
-                <li>3. Type <code>catch</code> to throw the Pokeball.</li>
-                <li>4. Watch the capture animation play in real time.</li>
-                <li>5. Open your Pokedex and keep collecting.</li>
-              </ol>
-            </div>
-            <div className="glow-card flex flex-col gap-4 px-6 py-6">
-              <h2 className="font-display text-lg uppercase tracking-[0.25em] text-emerald-100">
-                Capture Sequence
-              </h2>
-              <div className="grid gap-3 text-xs uppercase tracking-[0.3em] text-emerald-200/70 sm:grid-cols-2">
-                <div>Throwing</div>
-                <div>Opening</div>
-                <div>Absorbing</div>
-                <div>Closing</div>
-                <div>Shaking</div>
-                <div>Starburst</div>
-              </div>
-              <p className="text-sm text-emerald-200/80">
-                Each capture renders a full ASCII animation with wobble, star
-                bursts, and the classic three-shake countdown.
-              </p>
-            </div>
+          <section className="grid gap-6">
+            <SetupTabs />
           </section>
 
           <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
