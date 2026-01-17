@@ -2,10 +2,12 @@ import Image from "next/image";
 import PokeballScene from "./components/PokeballScene";
 import SetupTabs from "./components/SetupTabs";
 import CopyCode from "./components/CopyCode";
+import VisitTracker from "./components/VisitTracker";
 
 export default function Home() {
   return (
     <div className="scanlines min-h-screen">
+      <VisitTracker />
       <PokeballScene className="pointer-events-none fixed inset-0 -z-10 opacity-45 blur-lg" />
       <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8 sm:px-10 sm:py-12">
         <header className="ascii-panel flex flex-col gap-4 px-6 py-4 text-xs uppercase tracking-[0.3em] text-emerald-200/70 sm:flex-row sm:items-center sm:justify-between">
