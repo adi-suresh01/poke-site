@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { Terminal } from "xterm";
 import "xterm/css/xterm.css";
 
 type ConnectionStatus = "connecting" | "connected" | "closed" | "error";
