@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   title: "Poke-Stream | ASCII Pokemon over Telnet",
   description:
     "Terminal-native Pokemon catching game with a ray-cast 3D Pokeball. Connect live over Telnet.",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
