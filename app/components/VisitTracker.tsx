@@ -17,7 +17,7 @@ export default function VisitTracker() {
     }
 
     window.localStorage.setItem(STORAGE_KEY, today);
-    fetch("/api/visits", { method: "POST" }).catch(() => {});
+    fetch("/visits", { method: "POST" }).catch(() => {});
   }, []);
 
   return null;
